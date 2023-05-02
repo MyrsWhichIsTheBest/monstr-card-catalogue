@@ -1,7 +1,6 @@
 """
-This is my v1 of Monster Card Catalogue
+This is my v2 of Monster Card Catalogue
 I have added my catalogue and int checker from a previous project
-I have also defined the functions that I will be making.
 """
 
 import easygui
@@ -20,7 +19,12 @@ def int_check(variable):
 
 
 def add_card():
-    pass
+    """
+    This function asks the user for the name of the new card and asks for the stats of that card too.
+    """
+    stat_names = ["Strength", "Speed", "Stealth", "Cunning"]
+    name = easygui.enterbox("What is the name of the new card?")
+    stats = easygui.multenterbox(f"Input the stats for {name}:", stat_names)
 
 
 def search_edit_card():
@@ -54,17 +58,22 @@ catalogue = {
     "Wispghoul": [17, 19, 3, 2]
 }
 
+choices = {
+    'Add': add_card,
+    'Search/Edit': search_edit_card,
+    'Delete': delete_card,
+    'Print Catalogue': print_catalogue,
+    'Exit': exit_catalogue
+}
+
 
 while True:
-    request = easygui.choicebox("wip", choices=["add", "search", "delete", "print", "exit"])
-    if request == "add":
-        pass
-    elif request == "search":
-        pass
-    elif request == "delete":
-        pass
-    elif request == "print":
-        pass
+    request = easygui.choicebox("What do you want to do?", choices=list(choices.keys()))
+    if request:
+        easygui.msgbox(choices[request]())
     else:
-        pass
+        break
+
+
+
 
