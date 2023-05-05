@@ -20,9 +20,9 @@ def number_check(variable):  # this function is used in add card function to che
         return True
 
 
-def stats_format(dictionary, message=""):
+def stats_format(list, message=""):
     formatted_string = message
-    for key, value in dictionary.items():
+    for key, value in list.items():
         formatted_string += f"\n {key}: {value}"
     return formatted_string
 
@@ -57,7 +57,7 @@ def add_card(name):
         if isinstance(stats[-1], int):
             # if the last number in the stats list is an int it continues the program
             break
-    return [new_stats, name]
+    return [name, new_stats]
 
 
 def search_edit_card():
@@ -98,15 +98,15 @@ while True:
     if request == "add":
         output = add_card(easygui.enterbox("What is the name of the new card?"))
         # format dictionary to print out
-        catalogue.update({output[0]: output[1]})
-        easygui.msgbox(stats_format(output[0], f"You successfully created a New Monster Card: {output[1]}"))
+        catalogue.update({output[0]: list(output[1].values())})
+        easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
         # output is the return of the add_card() function which returns the stats and the name
     elif request == "search":
         pass
     elif request == "delete":
         pass
     elif request == "print":
-        pass
+        print(catalogue)
     else:
         pass
 
