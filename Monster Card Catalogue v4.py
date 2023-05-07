@@ -1,12 +1,13 @@
 """
-This is version 4 of my Add Card Function in python
-This function asks the user for the name of the new card and asks for the stats of that card too.
-I formatted the final string and made it so, you give the name outside the function
+This is my v2 of Monster Card Catalogue
+I have added my first function, Add Card Function v4, and it's required functions
 """
 
 import easygui
+import os
 
 
+# non core functions
 def number_check(variable):  # this function is used in add card function to check if stats are ints
     """
     This function takes a variable and checks if the variable can be an int
@@ -20,12 +21,14 @@ def number_check(variable):  # this function is used in add card function to che
         return True
 
 
-def stats_format(dictionary, message=""):
+def stats_format(list, message=""):
     formatted_string = message
-    for key, value in dictionary.items():
+    for key, value in list.items():
         formatted_string += f"\n {key}: {value}"
     return formatted_string
 
+
+# core functions
 
 def add_card(name):
     """
@@ -58,9 +61,56 @@ def add_card(name):
     return [name, new_stats]
 
 
-output = add_card(easygui.enterbox("What is the name of the new card?"))
-# format dictionary to print out
-# catalogue.update({output[0]: list(output[1].values())})
-# this code above adds the output to the catalogue (aka monster_card_dictionary v1)
-easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
-# output is the return of the add_card() function which returns the stats and the name
+def search_edit_card():
+    pass
+
+
+def delete_card():
+    pass
+
+
+def print_catalogue():
+    pass
+
+
+def exit_catalogue():
+    name = os.getlogin().split()
+    return name[0]
+
+
+# variables
+# dictionary containing all my data
+catalogue = {
+    "Stoneling": [7, 1, 25, 15],
+    "Vexscream": [1, 6, 21, 19],
+    "Dawnmirage": [5, 15, 18, 22],
+    "Blazegolem": [15, 20, 23, 6],
+    "Websnake": [7, 15, 10, 5],
+    "Moldvine": [21, 18, 14, 5],
+    "Vortexwing": [19, 13, 19, 2],
+    "Rotthing": [16, 7, 4, 12],
+    "Froststep": [14, 14, 17, 4],
+    "Wispghoul": [17, 19, 3, 2]
+}
+
+
+# main
+while True:
+    request = easygui.choicebox("wip", choices=["add", "search", "delete", "print", "exit"])
+    if request == "add":
+        output = add_card(easygui.enterbox("What is the name of the new card?"))
+        # format dictionary to print out
+        catalogue.update({output[0]: list(output[1].values())})
+        easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
+        # output is the return of the add_card() function which returns the stats and the name
+    elif request == "search":
+        pass
+    elif request == "delete":
+        pass
+    elif request == "print":
+        print(catalogue)
+    else:
+        easygui.msgbox(f"Goodbye, {exit_catalogue()}!")
+        exit()
+
+
