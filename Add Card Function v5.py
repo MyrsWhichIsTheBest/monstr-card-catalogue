@@ -20,9 +20,9 @@ def number_check(variable):  # this function is used in add card function to che
         return True
 
 
-def stats_format(dictionary, message=""):
+def stats_format(format_list, message=""):
     formatted_string = message
-    for key, value in dictionary.items():
+    for key, value in format_list.list():
         formatted_string += f"\n {key}: {value}"
     return formatted_string
 
