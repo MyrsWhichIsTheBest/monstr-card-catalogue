@@ -1,6 +1,6 @@
 """
-This is my v4 of Monster Card Catalogue
-I have replaced the old Add Card fucntion with v6 add card
+This is my v5 of Monster Card Catalogue
+I have added v3 of search card function
 """
 
 import easygui
@@ -31,7 +31,20 @@ def stats_format(dictionary, message=""):
         formatted_string += f"\n {key}: {value}"
     return formatted_string
 
+
+def name_stats(values):
+    """
+    This function receives the values and returns a dictionary with the stat names as the key
+    and values of the stats as the value.
+    """
+    stat_names = list(template.keys())
+    new_stats = template
+    for stat in stat_names:
+        new_stats[stat] = values[list(new_stats.keys()).index(stat)]
+    return new_stats
+
 # core functions
+
 
 def add_card(name, new_stats):
     """
@@ -62,8 +75,15 @@ def add_card(name, new_stats):
     return [name, new_stats]
 
 
+def search_card(card_name):
+    """
+    This simple function receives the stat with the name and a message
+    """
+    return stats_format(name_stats(catalogue[card_name]), f"These are the stats for {card_name}")
+
+
 def search_edit_card():
-    pass
+    easygui.msgbox(search_card(easygui.choicebox("What want search?", choices=(catalogue.keys()))))
 
 
 def delete_card():
@@ -106,7 +126,7 @@ while True:
         easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
         # output is the return of the add_card() function which returns the stats and the name
     elif request == "search":
-        pass
+        easygui.msgbox(search_card(easygui.choicebox("What want search?", choices=(catalogue.keys()))))
     elif request == "delete":
         pass
     elif request == "print":

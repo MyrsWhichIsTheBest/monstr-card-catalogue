@@ -24,6 +24,10 @@ template = ["Strength", "Speed", "Stealth", "Cunning"]
 
 
 def stats_format(dictionary, message=""):
+    """
+    this function receives a dictionary and a message which will be formatted into a string
+    for the user to read.
+    """
     formatted_string = message
     for key, value in dictionary.items():
         formatted_string += f"\n {key}: {value}"

@@ -1,6 +1,6 @@
 """
-This is version 2 of my search card function,
-I have
+This is version 3 of my search card function,
+I have made the code compatible with my Card Catalogue
 """
 
 import easygui
@@ -20,7 +20,7 @@ catalogue = {
     "Wispghoul": [17, 19, 3, 2]
 }
 
-template = ["Strength", "Speed", "Stealth", "Cunning"]
+template = {"Strength": 0, "Speed": 0, "Stealth": 0, "Cunning": 0}
 
 
 def stats_format(dictionary, message=""):
@@ -39,8 +39,9 @@ def name_stats(values):
     This function receives the values and returns a dictionary with the stat names as the key
     and values of the stats as the value.
     """
-    new_stats = {"Strength": 0, "Speed": 0, "Stealth": 0, "Cunning": 0}
-    for stat in template:
+    stat_names = list(template.keys())
+    new_stats = template
+    for stat in stat_names:
         new_stats[stat] = values[list(new_stats.keys()).index(stat)]
     return new_stats
 
