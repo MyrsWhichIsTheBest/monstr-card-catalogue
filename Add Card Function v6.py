@@ -1,7 +1,7 @@
 """
-This is version 4 of my Add Card Function in python
+This is version 6 of my Add Card Function in python
 This function asks the user for the name of the new card and asks for the stats of that card too.
-I removed an unnecessary variable from the function and replaced it with the dict.keys() method
+I removed some redundant variables
 """
 
 import easygui

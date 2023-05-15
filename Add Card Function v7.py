@@ -1,7 +1,7 @@
 """
-This is version 5 of my Add Card Function in python
+This is version 7 of my Add Card Function in python
 This function asks the user for the name of the new card and asks for the stats of that card too.
-I changed the type() to an isinstance()
+I have made the code compatible with my Card Catalogue
 """
 
 import easygui
@@ -20,22 +20,20 @@ def number_check(variable):  # this function is used in add card function to che
         return True
 
 
-def stats_format(format_list, message=""):
+def stats_format(dictionary, message=""):
     formatted_string = message
-    for key, value in format_list.list():
+    for key, value in dictionary.items():
         formatted_string += f"\n {key}: {value}"
     return formatted_string
 
 
-def add_card(name):
+def add_card(name, new_stats):
     """
     This function asks the user for the name of the new card and asks for the stats of that card too.
     """
-    new_stats = {"Strength": 0, "Speed": 0, "Stealth": 0, "Cunning": 0}
-    stat_names = ["Strength", "Speed", "Stealth", "Cunning"]
     while True:  # loops until every entry in stats are ints
         stats = easygui.multenterbox(f"Input the stats for {name}:\n"
-                                     f"Note: The number must be between 1 and 25", fields=stat_names)
+                                     f"Note: The number must be between 1 and 25", fields=(new_stats.keys()))
         # asks for the stats of the card
         for i in range(len(stats)):
             if number_check(stats[i]):
@@ -47,7 +45,7 @@ def add_card(name):
                     # error message for numbers not between 1 and 25
                     break
                 else:
-                    new_stats[stat_names[i]] = stats[i]
+                    new_stats[(new_stats.keys())[i]] = stats[i]
             else:
                 easygui.msgbox("Please only input whole numbers", ok_button="Ugh Fine...")
                 # error message for non-real numbers and also letters
