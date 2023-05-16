@@ -33,7 +33,7 @@ def add_card(name, new_stats):
     """
     while True:  # loops until every entry in stats are ints
         stats = easygui.multenterbox(f"Input the stats for {name}:\n"
-                                     f"Note: The number must be between 1 and 25", fields=(new_stats.keys()))
+                                     f"Note: The number must be between 1 and 25", fields=(list(new_stats.keys())))
         # asks for the stats of the card
         for i in range(len(stats)):
             if number_check(stats[i]):
@@ -45,7 +45,7 @@ def add_card(name, new_stats):
                     # error message for numbers not between 1 and 25
                     break
                 else:
-                    new_stats[(new_stats.keys())[i]] = stats[i]
+                    new_stats[list(new_stats.keys())[i]] = stats[i]
             else:
                 easygui.msgbox("Please only input whole numbers", ok_button="Ugh Fine...")
                 # error message for non-real numbers and also letters
@@ -56,7 +56,8 @@ def add_card(name, new_stats):
     return [name, new_stats]
 
 
-output = add_card(easygui.enterbox("What is the name of the new card?"))
+template = {"Strength": 0, "Speed": 0, "Stealth": 0, "Cunning": 0}
+output = add_card(easygui.enterbox("What is the name of the new card?"), template)
 # format dictionary to print out
 # catalogue.update({output[0]: list(output[1].values())})
 # this code above adds the output to the catalogue (aka monster_card_dictionary v1)
