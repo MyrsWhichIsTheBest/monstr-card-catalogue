@@ -1,7 +1,7 @@
 """
 This is version 8 of my Add Card Function in python
 This function asks the user for the name of the new card and asks for the stats of that card too.
-This is my trialling for add card function
+This is my trialling for add card function, for the function I ultimately went with, go to v7
 """
 import easygui
 
