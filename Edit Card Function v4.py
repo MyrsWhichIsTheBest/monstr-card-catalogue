@@ -1,11 +1,10 @@
 """
-This is v1 of edit card function, which, in conjunction with search card, will edit the stats of cards
+This is v4 of edit card function, which, in conjunction with search card, will edit the stats of cards
 in the catalogue.
-I used a bunch of code from the add code but changed some parts to work with the search function.
+This is the trialling version of edit card function.
 """
 
 import easygui
-import os
 
 
 catalogue = {
@@ -50,9 +49,7 @@ def name_stats(values):
     and values of the stats as the value.
     """
     stat_names = list(template.keys())
-    new_stats = template
-    for stat in stat_names:
-        new_stats[stat] = values[list(new_stats.keys()).index(stat)]
+    new_stats = dict(zip(stat_names, values))
     return new_stats
 
 
@@ -64,35 +61,31 @@ def search_card(card_name):
 
 
 def edit_card(card_name):
-    """
-    This function will receive a name and will let the user edit the card
-    """
-    list_empty = []
-    stats = easygui.multenterbox(f"Input the stats for {card_name}:\n"
-                                 f"Note: The number must be between 1 and 25", fields=(list(template.keys())))
-    for i in range(len(stats)):
-        if number_check(stats[i]):
-            stats[i] = int(stats[i])  # replaces the number to an integer
-            if stats[i] < 1 or stats[i] > 25:
-                # this checks if position i in the stats list is between 1 and 25
-                # if it is not it will reset the while loop
-                easygui.msgbox("Please only use whole numbers between 1 and 25", ok_button="Ugh Fine...")
-                # error message for numbers not between 1 and 25
+    new_list = []
+    original_stat = catalogue[card_name]
+
+    while True:
+        continue_program = True
+
+        for i in list(template.keys()):
+            stat = easygui.integerbox(f"Input the {i} stat for {card_name}:\n"
+                                      f"Note: The number must be between 1 and 25",
+                                      lowerbound=1, upperbound=25)
+            if stat is None:
+                continue_program = False
                 break
             else:
-                list_empty.append(stats[i])
-        else:
-            easygui.msgbox("Please only input whole numbers", ok_button="Ugh Fine...")
-            # error message for non-real numbers and also letters
-            break
-        if isinstance(stats[-1], int):
-            # if the last number in the stats list is an int it continues the program
-            break
-    return [card_name, list_empty]
+                new_list.append(stat)
+
+        if continue_program:
+            if easygui.ynbox(f"Is this correct?\n"
+                             f"{stats_format(name_stats(new_list))}"):
+                break
+    return [card_name, new_list]
 
 
 while True:
     results = search_card(easygui.choicebox("What want search?", choices=(catalogue.keys())))
-    if easygui.ynbox(f"{results[0]}\n Do you wish to edit this card?"):
+    if easygui.ynbox(f"{results[0]}\n\n Do you wish to edit this card?"):
         edit = edit_card(results[1])
         catalogue[edit[0]] = edit[1]
