@@ -1,6 +1,6 @@
 """
-This is my v10 of Monster Card Catalogue
-I have added delete card function v2
+This is my v12 of Monster Card Catalogue
+I have changed the main's choice box into a button box for aesthetics
 """
 
 import easygui
@@ -40,6 +40,7 @@ def name_stats(values):
     stat_names = list(template.keys())
     new_stats = dict(zip(stat_names, values))
     return new_stats
+
 
 # core functions
 
@@ -91,6 +92,8 @@ def edit_card(card_name):
         stats = easygui.multenterbox(f"Input the stats for {card_name}:\n"
                                      f"Note: The number must be between 1 and 25",
                                      fields=(list(template.keys())), values=original_stat)
+        if stats is None:
+            return
         for i in range(len(stats)):
             if number_check(stats[i]):
                 stats[i] = int(stats[i])  # replaces the number to an integer
@@ -151,26 +154,37 @@ catalogue = {
 }
 template = {"Strength": 0, "Speed": 0, "Stealth": 0, "Cunning": 0}
 
-
 # main
 while True:
-    request = easygui.choicebox("wip", choices=["add", "search and edit", "delete", "print", "exit"])
-    if request == "add":
-        output = add_card(easygui.enterbox("What is the name of the new card?"), template)
+    request = easygui.buttonbox("What would you like to do today?",
+                                choices=["Add", "Search and Edit", "Delete", "Print", "Exit"])
+    if request == "Add":
+        user_input = easygui.enterbox("What is the name of the new card?")
+        if user_input is None:
+            continue
+        output = add_card(user_input, template)
         # format dictionary to print out
         catalogue.update({output[0]: list(output[1].values())})
         easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
         # output is the return of the add_card() function which returns the stats and the name
-    elif request == "search and edit":
-        results = search_card(easygui.choicebox("What want search?", choices=(catalogue.keys())))
+    elif request == "Search and Edit":
+        user_input = easygui.choicebox("What want search?", choices=(catalogue.keys()))
+        if user_input is None:
+            continue
+        results = search_card(user_input)
         if easygui.ynbox(f"{results[0]}\n\n Do you wish to edit this card?"):
             edit = edit_card(results[1])
+            if edit is None:
+                continue
             catalogue[edit[0]] = edit[1]
-    elif request == "delete":
-        delete_card(easygui.choicebox("What do you want to delete?", choices=list(catalogue.keys())))
-    elif request == "print":
+    elif request == "Delete":
+        user_input = easygui.choicebox("What do you want to delete?", choices=list(catalogue.keys()))
+        if user_input is None:
+            continue
+        delete_card(user_input)
+    elif request == "Print":
         print(catalogue)
     else:
-        easygui.msgbox(f"Goodbye, {exit_catalogue()}!")
-        exit()
-
+        if easygui.ynbox("Do you wish to exit?"):
+            easygui.msgbox(f"Goodbye, {exit_catalogue()}!")
+            exit()
