@@ -1,6 +1,6 @@
 """
-This is my v13 of Monster Card Catalogue
-I have replaced delete card function v2 with v3
+This is my v14 of Monster Card Catalogue
+I have added print catalogue v2 in place of the placeholder code
 """
 
 import easygui
