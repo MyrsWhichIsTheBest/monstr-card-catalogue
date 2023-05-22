@@ -92,7 +92,7 @@ def edit_card(card_name):
         stats = easygui.multenterbox(f"Input the stats for {card_name}:\n"
                                      f"Note: The number must be between 1 and 25",
                                      fields=(list(template.keys())), values=original_stat)
-        if stats is None:
+        if stats is None:  # exits the function
             return
         for i in range(len(stats)):
             if number_check(stats[i]):
@@ -138,7 +138,7 @@ def print_catalogue(format_as, output_location):
     if format_as == "As python dictionary":
         print_string = catalogue
     else:  # In bullet points
-        for card in catalogue:
+        for card in catalogue:  # loops through the cards in the catalogue
             print_string += f"{stats_format(name_stats(catalogue[card]), card)}\n"
     if output_location == "on Here":
         easygui.msgbox(print_string)
@@ -177,7 +177,7 @@ while True:
                                 choices=["Add", "Search and Edit", "Delete", "Print", "Exit"])
     if request == "Add":
         user_input = easygui.enterbox("What is the name of the new card?")
-        if user_input is None:
+        if user_input is None:  # exits the function
             continue
         output = add_card(user_input, template)
         # format dictionary to print out
@@ -186,17 +186,17 @@ while True:
         # output is the return of the add_card() function which returns the stats and the name
     elif request == "Search and Edit":
         user_input = easygui.choicebox("What want search?", choices=(catalogue.keys()))
-        if user_input is None:
+        if user_input is None:  # exits the function
             continue
         results = search_card(user_input)
         if easygui.ynbox(f"{results[0]}\n\n Do you wish to edit this card?"):
             edit = edit_card(results[1])
-            if edit is None:
+            if edit is None:  # exits the function
                 continue
             catalogue[edit[0]] = edit[1]
     elif request == "Delete":
         user_input = easygui.choicebox("What do you want to delete?", choices=list(catalogue.keys()))
-        if user_input is None:
+        if user_input is None:  # exits the function
             continue
         if len(catalogue) == 2:
             easygui.msgbox("You must have at least 2 cards in your catalogue!")
@@ -205,12 +205,12 @@ while True:
     elif request == "Print":
         format_option = easygui.buttonbox("How do you want to format the list?",
                                           choices=["As python dictionary", "As formatted list", "Cancel"])
-        if format_option == "Cancel":
-            pass  # would be 'continue' in main
+        if format_option == "Cancel":  # exits the function
+            continue
         output_option = easygui.buttonbox("Where should this be output to?",
                                           choices=["on Here", "to Terminal", "Cancel"])
-        if format_option == "Cancel":
-            pass  # would be 'continue' in main
+        if format_option == "Cancel":  # exits the function
+            continue
         print_catalogue(format_option, output_option)
     else:
         if easygui.ynbox("Do you wish to exit?"):
