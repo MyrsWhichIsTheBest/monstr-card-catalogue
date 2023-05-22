@@ -1,6 +1,6 @@
 """
-This is my v14 of Monster Card Catalogue
-I have added print catalogue v2 in place of the placeholder code
+This is my v15 of Monster Card Catalogue
+I have commented everything, so it is not so difficult to edit in the future
 """
 
 import easygui
@@ -23,7 +23,7 @@ def number_check(variable):  # this function is used in add card function to che
 
 def stats_format(dictionary, message=""):
     """
-    this function receives a dictionary and a message which will be formatted into a string
+    This function receives a dictionary and a message which will be formatted into a string
     for the user to read.
     """
     formatted_string = message
@@ -131,6 +131,9 @@ def delete_card(card_name):
 
 
 def print_catalogue(format_as, output_location):
+    """
+    This function prints the catalogue in the specified format and output location.
+    """
     print_string = ""
     if format_as == "As python dictionary":
         print_string = catalogue
@@ -145,6 +148,9 @@ def print_catalogue(format_as, output_location):
 
 
 def exit_catalogue():
+    """
+    This function returns the name of the user for the exit message.
+    """
     name = os.getlogin().split()
     return name[0]
 
