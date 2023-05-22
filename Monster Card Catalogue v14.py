@@ -130,8 +130,18 @@ def delete_card(card_name):
         easygui.msgbox(f"You have successfully deleted {card_name}!")
 
 
-def print_catalogue():
-    pass
+def print_catalogue(format_as, output_location):
+    print_string = ""
+    if format_as == "As python dictionary":
+        print_string = catalogue
+    else:  # In bullet points
+        for card in catalogue:
+            print_string += f"{stats_format(name_stats(catalogue[card]), card)}\n"
+    if output_location == "on Here":
+        easygui.msgbox(print_string)
+        print(print_string)
+    else:  # to the terminal
+        print(print_string)
 
 
 def exit_catalogue():
@@ -187,7 +197,15 @@ while True:
             continue
         delete_card(user_input)
     elif request == "Print":
-        print(catalogue)
+        format_option = easygui.buttonbox("How do you want to format the list?",
+                                          choices=["As python dictionary", "As formatted list", "Cancel"])
+        if format_option == "Cancel":
+            pass  # would be 'continue' in main
+        output_option = easygui.buttonbox("Where should this be output to?",
+                                          choices=["on Here", "to Terminal", "Cancel"])
+        if format_option == "Cancel":
+            pass  # would be 'continue' in main
+        print_catalogue(format_option, output_option)
     else:
         if easygui.ynbox("Do you wish to exit?"):
             easygui.msgbox(f"Goodbye, {exit_catalogue()}!")
