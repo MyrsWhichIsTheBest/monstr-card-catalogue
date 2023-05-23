@@ -7,7 +7,7 @@ import easygui
 import os
 
 
-# non core functions
+# non-core functions / functions which are used inside other functions and in main
 def number_check(variable):  # this function is used in add card function to check if stats are ints
     """
     This function takes a variable and checks if the variable can be an int
@@ -42,7 +42,7 @@ def name_stats(values):
     return new_stats
 
 
-# core functions
+# core functions / component functions
 
 
 def add_card(name, new_stats):
