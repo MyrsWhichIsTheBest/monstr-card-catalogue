@@ -185,7 +185,7 @@ while True:
         easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
         # output is the return of the add_card() function which returns the stats and the name
     elif request == "Search and Edit":
-        user_input = easygui.choicebox("What want search?", choices=(catalogue.keys()))
+        user_input = easygui.choicebox("What do you want to search?", choices=(catalogue.keys()))
         if user_input is None:  # exits the function
             continue
         results = search_card(user_input)
