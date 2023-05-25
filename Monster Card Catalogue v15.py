@@ -1,6 +1,7 @@
 """
 This is my v15 of Monster Card Catalogue
 I have commented everything, so it is not so difficult to edit in the future
+I also fixed the issues my End Users had.
 """
 
 import easygui
@@ -15,7 +16,7 @@ def number_check(variable):  # this function is used in add card function to che
     """
     try:
         int(variable)
-    except:
+    except ValueError:
         return False
     else:
         return True
@@ -53,6 +54,8 @@ def add_card(name, new_stats):
         stats = easygui.multenterbox(f"Input the stats for {name}:\n"
                                      f"Note: The number must be between 1 and 25", fields=(list(new_stats.keys())))
         # asks for the stats of the card
+        if stats is None:
+            return
         for i in range(len(stats)):
             if number_check(stats[i]):
                 stats[i] = int(stats[i])  # replaces the number to an integer
@@ -143,6 +146,8 @@ def print_catalogue(format_as, output_location):
     if output_location == "on Here":
         easygui.msgbox(print_string)
         print(print_string)
+    elif output_location == "Cancel":
+        return
     else:  # to the terminal
         print(print_string)
 
@@ -181,9 +186,12 @@ while True:
             continue
         output = add_card(user_input, template)
         # format dictionary to print out
+        if user_input is None:  # exits the function
+            continue
         catalogue.update({output[0]: list(output[1].values())})
         easygui.msgbox(stats_format(output[1], f"You successfully created a New Monster Card: {output[0]}"))
         # output is the return of the add_card() function which returns the stats and the name
+        print(output[0], output[1])
     elif request == "Search and Edit":
         user_input = easygui.choicebox("What do you want to search?", choices=(catalogue.keys()))
         if user_input is None:  # exits the function
@@ -191,6 +199,7 @@ while True:
         results = search_card(user_input)
         if easygui.ynbox(f"{results[0]}\n\n Do you wish to edit this card?"):
             edit = edit_card(results[1])
+            print(edit)
             if edit is None:  # exits the function
                 continue
             catalogue[edit[0]] = edit[1]
