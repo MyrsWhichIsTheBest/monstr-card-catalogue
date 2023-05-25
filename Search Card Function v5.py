@@ -1,6 +1,7 @@
 """
 This is version 5 of my search card function,
-This is my trialling
+This is my trialling, I have used enterbox instead of a choice box.
+I ultimately used choice box
 """
 
 import easygui

@@ -9,6 +9,14 @@ import os
 
 
 # non-core functions / functions which are used inside other functions and in main
+def get_name():
+    """
+    This function returns the name of the user for the exit message.
+    """
+    name = os.getlogin().split()
+    return name[0]
+
+
 def number_check(variable):  # this function is used in add card function to check if stats are ints
     """
     This function takes a variable and checks if the variable can be an int
@@ -52,7 +60,8 @@ def add_card(name, new_stats):
     """
     while True:  # loops until every entry in stats are ints
         stats = easygui.multenterbox(f"Input the stats for {name}:\n"
-                                     f"Note: The number must be between 1 and 25", fields=(list(new_stats.keys())))
+                                     f"Note: The number must be between 1 and 25",
+                                     fields=(list(new_stats.keys())))
         # asks for the stats of the card
         if stats is None:
             return
@@ -62,7 +71,8 @@ def add_card(name, new_stats):
                 if stats[i] < 1 or stats[i] > 25:
                     # this checks if position i in the stats list is between 1 and 25
                     # if it is not it will reset the while loop
-                    easygui.msgbox("Please only use whole numbers between 1 and 25", ok_button="OK")
+                    easygui.msgbox("Please only use whole numbers between 1 and 25",
+                                   ok_button="OK")
                     # error message for numbers not between 1 and 25
                     break
                 else:
@@ -81,7 +91,8 @@ def search_card(card_name):
     """
     This simple function receives the stat with the name and a message
     """
-    return [stats_format(name_stats(catalogue[card_name]), f"These are the stats for {card_name}"), card_name]
+    return [stats_format(name_stats(catalogue[card_name]),
+                         f"These are the stats for {card_name}"), card_name]
 
 
 def edit_card(card_name):
@@ -103,7 +114,8 @@ def edit_card(card_name):
                 if stats[i] < 1 or stats[i] > 25:
                     # this checks if position i in the stats list is between 1 and 25
                     # if it is not it will reset the while loop
-                    easygui.msgbox("Please only use whole numbers between 1 and 25", ok_button="OK")
+                    easygui.msgbox("Please only use whole numbers between 1 and 25",
+                                   ok_button="OK")
                     # error message for numbers not between 1 and 25
                     stats = original_stat
                     continue_program = False
@@ -150,14 +162,6 @@ def print_catalogue(format_as, output_location):
         return
     else:  # to the terminal
         print(print_string)
-
-
-def exit_catalogue():
-    """
-    This function returns the name of the user for the exit message.
-    """
-    name = os.getlogin().split()
-    return name[0]
 
 
 # variables
@@ -223,5 +227,5 @@ while True:
         print_catalogue(format_option, output_option)
     else:
         if easygui.ynbox("Do you wish to exit?"):
-            easygui.msgbox(f"Goodbye, {exit_catalogue()}!")
+            easygui.msgbox(f"Goodbye, {get_name()}!")
             exit()

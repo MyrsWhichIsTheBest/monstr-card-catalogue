@@ -61,6 +61,9 @@ def search_card(card_name):
 
 
 def edit_card(card_name):
+    """
+    This function will receive a name and will let the user edit the card
+    """
     new_list = []
     original_stat = catalogue[card_name]
 
